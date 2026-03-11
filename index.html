@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>D. Rosenfeld</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=IM+Fell+English:ital@0;1&family=Courier+Prime:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --ink:       #0e0c09;
+      --paper:     #12100d;
+      --aged:      #1a1610;
+      --border:    #2a2318;
+      --rust:      #3d2f1a;
+      --muted:     #5a4a32;
+      --warm:      #8a7254;
+      --body:      #b09a78;
+      --heading:   #d4bc96;
+      --cream:     #e8d8b8;
+      --blood:     #8b1a1a;
+      --ember:     #c4622a;
+      --gold:      #c9a84c;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--ink);
+      color: var(--body);
+      font-family: 'IM Fell English', serif;
+      font-size: 16px;
+      line-height: 1.8;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: '';
+      position: fixed; inset: 0; z-index: 0;
+      pointer-events: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='400' height='400' filter='url(%23n)' opacity='0.06'/%3E%3C/svg%3E");
+      mix-blend-mode: overlay;
+      opacity: 0.8;
+    }
+
+    body::after {
+      content: '';
+      position: fixed; inset: 0; z-index: 0;
+      pointer-events: none;
+      background: radial-gradient(ellipse at center, transparent 50%, rgba(0,0,0,0.7) 100%);
+    }
+
+    .wrapper {
+      position: relative; z-index: 1;
+      max-width: 860px; margin: 0 auto; padding: 0 40px;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      padding: 20px 0; transition: background .4s;
+    }
+    nav.scrolled {
+      background: rgba(10,8,6,0.92);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-inner {
+      display: flex; align-items: center; justify-content: space-between;
+      max-width: 860px; margin: 0 auto; padding: 0 40px;
+    }
+    .nav-logo {
+      font-family: 'Playfair Display', serif; font-style: italic;
+      font-size: 20px; color: var(--heading); text-decoration: none;
+    }
+    .nav-links { display: flex; gap: 36px; list-style: none; }
+    .nav-links a {
+      font-family: 'Courier Prime', monospace; font-size: 11px;
+      letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--muted); text-decoration: none; transition: color .25s;
+    }
+    .nav-links a:hover { color: var(--gold); }
+
+    /* HERO */
+    #hero {
+      min-height: 100vh; display: flex; flex-direction: column;
+      justify-content: center; padding: 120px 0 80px; position: relative;
+    }
+    .chapter-mark {
+      font-family: 'Courier Prime', monospace; font-size: 10px;
+      letter-spacing: 0.3em; text-transform: uppercase;
+      color: var(--muted); margin-bottom: 32px;
+      display: flex; align-items: center; gap: 16px;
+    }
+    .chapter-mark::before, .chapter-mark::after { content: '—'; color: var(--rust); }
+
+    h1 {
+      font-family: 'Playfair Display', serif; font-size: clamp(56px, 9vw, 120px);
+      font-weight: 700; line-height: 0.9; letter-spacing: -2px;
+      color: var(--cream); margin-bottom: 12px;
+    }
+    h1 em { font-style: italic; color: var(--gold); display: block; }
+
+    .hero-rule {
+      width: 100%; height: 1px;
+      background: linear-gradient(90deg, var(--ember), var(--border), transparent);
+      margin: 40px 0;
+    }
+    .hero-desc {
+      max-width: 520px; font-family: 'IM Fell English', serif;
+      font-style: italic; font-size: 17px; color: var(--warm);
+      line-height: 1.9; margin-bottom: 48px;
+    }
+    .hero-meta { display: flex; gap: 48px; flex-wrap: wrap; }
+    .meta-item {
+      font-family: 'Courier Prime', monospace; font-size: 10px;
+      letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted);
+    }
+    .meta-item span {
+      display: block; font-size: 13px; color: var(--body);
+      margin-top: 4px; letter-spacing: 0.05em;
+    }
+    .big-quote {
+      position: absolute; font-family: 'Playfair Display', serif;
+      font-size: 400px; line-height: 1;
+      color: rgba(201,168,76,0.03); top: 50%; right: -20px;
+      transform: translateY(-50%); pointer-events: none; user-select: none; z-index: 0;
+    }
+
+    /* DIVIDER */
+    .chapter-divider { text-align: center; padding: 60px 0; position: relative; }
+    .chapter-divider::before {
+      content: ''; position: absolute; top: 50%; left: 0; right: 0;
+      height: 1px; background: var(--border);
+    }
+    .chapter-divider-inner {
+      display: inline-flex; align-items: center; gap: 16px;
+      background: var(--ink); padding: 0 24px; position: relative;
+      font-family: 'Courier Prime', monospace; font-size: 10px;
+      letter-spacing: 0.3em; text-transform: uppercase; color: var(--rust);
+    }
+    .chapter-divider-inner::before, .chapter-divider-inner::after { content: '✦'; color: var(--rust); font-size: 8px; }
+
+    /* SECTIONS */
+    section { padding: 80px 0; }
+    .section-eyebrow {
+      font-family: 'Courier Prime', monospace; font-size: 10px;
+      letter-spacing: 0.25em; text-transform: uppercase;
+      color: var(--ember); margin-bottom: 24px;
+    }
+    h2 {
+      font-family: 'Playfair Display', serif; font-size: clamp(28px, 4vw, 48px);
+      font-weight: 700; font-style: italic; color: var(--heading);
+      letter-spacing: -0.5px; line-height: 1.1; margin-bottom: 32px;
+    }
+
+    /* ABOUT */
+    .about-body { display: grid; grid-template-columns: 3fr 2fr; gap: 64px; align-items: start; }
+    .about-text p { color: var(--body); margin-bottom: 20px; font-size: 16px; line-height: 1.9; }
+    .about-text p em { color: var(--warm); }
+
+    .logbook {
+      border: 1px solid var(--border); padding: 28px;
+      background: var(--aged); position: relative;
+    }
+    .logbook::before {
+      content: 'EINTRAG'; position: absolute; top: -1px; left: 20px;
+      background: var(--aged); padding: 0 8px;
+      font-family: 'Courier Prime', monospace; font-size: 9px;
+      letter-spacing: 0.2em; color: var(--rust); transform: translateY(-50%);
+    }
+    .logbook-line {
+      display: flex; justify-content: space-between; align-items: baseline;
+      padding: 10px 0; border-bottom: 1px solid var(--border);
+      font-family: 'Courier Prime', monospace; font-size: 12px;
+    }
+    .logbook-line:last-child { border-bottom: none; }
+    .logbook-key { color: var(--muted); letter-spacing: 0.1em; }
+    .logbook-val { color: var(--heading); }
+
+    /* PROJECTS */
+    .project-list { display: flex; flex-direction: column; gap: 2px; }
+    .project-item {
+      border: 1px solid var(--border); background: var(--aged);
+      padding: 32px 36px; transition: all .3s; position: relative; overflow: hidden;
+    }
+    .project-item::before {
+      content: ''; position: absolute; left: 0; top: 0; bottom: 0;
+      width: 3px; background: var(--ember);
+      transform: scaleY(0); transform-origin: bottom; transition: transform .35s;
+    }
+    .project-item:hover { background: var(--rust); border-color: var(--warm); }
+    .project-item:hover::before { transform: scaleY(1); }
+    .project-header {
+      display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 12px;
+    }
+    .project-num { font-family: 'Courier Prime', monospace; font-size: 10px; letter-spacing: 0.2em; color: var(--muted); }
+    .project-status { font-family: 'Courier Prime', monospace; font-size: 10px; letter-spacing: 0.15em; color: var(--ember); text-transform: uppercase; }
+    .project-title { font-family: 'Playfair Display', serif; font-size: 22px; font-style: italic; color: var(--heading); margin-bottom: 10px; transition: color .2s; }
+    .project-item:hover .project-title { color: var(--cream); }
+    .project-desc { font-size: 14px; color: var(--warm); line-height: 1.7; max-width: 580px; }
+    .project-item.coming {
+      border-style: dashed; background: transparent; text-align: center; padding: 40px;
+      color: var(--muted); font-family: 'Courier Prime', monospace; font-size: 12px; letter-spacing: 0.15em;
+    }
+
+    /* BOOK */
+    .excerpt-frame {
+      border: 1px solid var(--border); background: var(--aged);
+      padding: 56px; position: relative;
+    }
+    .excerpt-frame::before {
+      content: '"'; position: absolute; top: 20px; left: 32px;
+      font-family: 'Playfair Display', serif; font-size: 80px;
+      line-height: 1; color: var(--ember); opacity: 0.4;
+    }
+    .excerpt-title {
+      font-family: 'Courier Prime', monospace; font-size: 10px;
+      letter-spacing: 0.3em; text-transform: uppercase; color: var(--muted); margin-bottom: 24px;
+    }
+    .excerpt-chapter {
+      font-family: 'Playfair Display', serif; font-size: 13px;
+      font-style: italic; color: var(--ember); margin-bottom: 28px;
+      padding-bottom: 20px; border-bottom: 1px solid var(--border);
+    }
+    .excerpt-text { font-family: 'IM Fell English', serif; font-size: 16px; line-height: 2; color: var(--body); }
+    .excerpt-text p { margin-bottom: 20px; }
+    .excerpt-text p:last-child { margin-bottom: 0; }
+    .excerpt-text em { color: var(--warm); font-style: italic; }
+    blockquote.dialogue {
+      margin: 20px 0 20px 24px; padding-left: 20px;
+      border-left: 2px solid var(--rust); font-style: italic; color: var(--warm);
+    }
+    .excerpt-more {
+      margin-top: 32px; padding-top: 24px; border-top: 1px solid var(--border);
+      font-family: 'Courier Prime', monospace; font-size: 11px;
+      letter-spacing: 0.15em; color: var(--muted); text-align: right;
+    }
+
+    /* CONTACT */
+    #contact { padding: 80px 0 120px; text-align: center; }
+    .contact-seal {
+      width: 80px; height: 80px; border: 2px solid var(--rust); border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Playfair Display', serif; font-size: 28px;
+      color: var(--ember); margin: 0 auto 40px; font-style: italic;
+    }
+    #contact h2 { margin-bottom: 12px; }
+    .contact-sub { font-style: italic; color: var(--warm); margin-bottom: 48px; font-size: 15px; }
+    .contact-email {
+      display: inline-block; font-family: 'Playfair Display', serif;
+      font-style: italic; font-size: clamp(22px, 4vw, 38px);
+      color: var(--heading); text-decoration: none; letter-spacing: -0.5px;
+      transition: color .25s; margin-bottom: 48px;
+    }
+    .contact-email:hover { color: var(--gold); }
+    .socials { display: flex; justify-content: center; gap: 12px; }
+    .social-link {
+      display: inline-flex; padding: 10px 22px; border: 1px solid var(--border);
+      font-family: 'Courier Prime', monospace; font-size: 10px;
+      letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--muted); text-decoration: none; transition: all .25s;
+    }
+    .social-link:hover { border-color: var(--ember); color: var(--ember); background: rgba(196,98,42,0.05); }
+
+    /* FOOTER */
+    footer { border-top: 1px solid var(--border); padding: 32px 0; }
+    .footer-inner {
+      display: flex; align-items: center; justify-content: space-between;
+      max-width: 860px; margin: 0 auto; padding: 0 40px;
+      font-family: 'Courier Prime', monospace; font-size: 10px;
+      letter-spacing: 0.15em; color: var(--muted);
+    }
+
+    /* REVEAL */
+    .reveal { opacity: 0; transform: translateY(24px); transition: opacity .8s ease, transform .8s ease; }
+    .reveal.visible { opacity: 1; transform: none; }
+
+    @media (max-width: 700px) {
+      .about-body { grid-template-columns: 1fr; gap: 40px; }
+      .nav-links { display: none; }
+      .excerpt-frame { padding: 28px; }
+      h1 { letter-spacing: -1px; }
+    }
+  </style>
+</head>
+<body>
+
+<nav id="nav">
+  <div class="nav-inner">
+    <a class="nav-logo" href="#">D. Rosenfeld</a>
+    <ul class="nav-links">
+      <li><a href="#about">Über mich</a></li>
+      <li><a href="#projects">Projekte</a></li>
+      <li><a href="#book">The Stars</a></li>
+      <li><a href="#contact">Kontakt</a></li>
+    </ul>
+  </div>
+</nav>
+
+<section id="hero">
+  <div class="wrapper">
+    <div class="big-quote">"</div>
+    <div class="chapter-mark">drosenfeld.ch — Portfolio</div>
+    <h1>D.<br><em>Rosenfeld</em></h1>
+    <div class="hero-rule"></div>
+    <p class="hero-desc">
+      Geschichten, die nicht vergessen werden.<br>
+      Projekte, die etwas bedeuten.<br>
+      Eine Person, die das Universum beobachtet.
+    </p>
+    <div class="hero-meta">
+      <div class="meta-item">Standort<span>Schweiz</span></div>
+      <div class="meta-item">Status<span>Verfügbar</span></div>
+      <div class="meta-item">Werk<span>The Stars</span></div>
+    </div>
+  </div>
+</section>
+
+<div class="wrapper"><div class="chapter-divider"><div class="chapter-divider-inner">Kapitel I — Über mich</div></div></div>
+
+<section id="about">
+  <div class="wrapper">
+    <div class="section-eyebrow">Wer ich bin</div>
+    <h2>Jeder Mensch trägt<br>eine Geschichte in sich.</h2>
+    <div class="about-body reveal">
+      <div class="about-text">
+        <p>Hallo — ich bin <em>D. Rosenfeld</em>, basiert in der Schweiz. Ich erschaffe Dinge: Geschichten, Projekte, Ideen.</p>
+        <p>Was mich antreibt ist die Überzeugung, dass <em>jede Geschichte es wert ist, erzählt zu werden</em> — auch die unbequemen, die rohen, die noch unfertigen.</p>
+        <p>Wenn ich nicht schreibe oder an Projekten arbeite, beobachte ich die Welt und sammle Fragmente, die sich irgendwann zu etwas Grösserem zusammenfügen.</p>
+      </div>
+      <div class="logbook">
+        <div class="logbook-line"><span class="logbook-key">Name</span><span class="logbook-val">D. Rosenfeld</span></div>
+        <div class="logbook-line"><span class="logbook-key">Planet</span><span class="logbook-val">Schweiz 🇨🇭</span></div>
+        <div class="logbook-line"><span class="logbook-key">Status</span><span class="logbook-val">Verfügbar</span></div>
+        <div class="logbook-line"><span class="logbook-key">Werk</span><span class="logbook-val">The Stars</span></div>
+        <div class="logbook-line"><span class="logbook-key">Koordinaten</span><span class="logbook-val">47.3769° N</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="wrapper"><div class="chapter-divider"><div class="chapter-divider-inner">Kapitel II — Projekte</div></div></div>
+
+<section id="projects">
+  <div class="wrapper">
+    <div class="section-eyebrow">Was ich geschaffen habe</div>
+    <h2>Projekte & Arbeiten</h2>
+    <div class="project-list">
+      <div class="project-item reveal">
+        <div class="project-header">
+          <span class="project-num">001</span>
+          <span class="project-status">In Arbeit</span>
+        </div>
+        <div class="project-title">The Stars</div>
+        <p class="project-desc">Ein Science-Fiction-Roman. Eine Welt ohne Hoffnung, ein Sklave namens Leku, und ein Universum voller verborgener Wahrheiten. — Ersetze dies mit deiner echten Beschreibung.</p>
+      </div>
+      <div class="project-item reveal">
+        <div class="project-header">
+          <span class="project-num">002</span>
+          <span class="project-status">Abgeschlossen</span>
+        </div>
+        <div class="project-title">Projekt Beta</div>
+        <p class="project-desc">Beschreibe hier dein zweites Projekt. Was war die Aufgabe, was hast du erreicht?</p>
+      </div>
+      <div class="project-item coming reveal">✦ &nbsp; Das nächste Projekt entsteht gerade &nbsp; ✦</div>
+    </div>
+  </div>
+</section>
+
+<div class="wrapper"><div class="chapter-divider"><div class="chapter-divider-inner">Kapitel III — The Stars</div></div></div>
+
+<section id="book">
+  <div class="wrapper">
+    <div class="section-eyebrow">Leseprobe</div>
+    <h2>The Stars</h2>
+    <div class="excerpt-frame reveal">
+      <div class="excerpt-title">Leseprobe — Kapitel 1</div>
+      <div class="excerpt-chapter">Kapitel 1 — Turicum</div>
+      <div class="excerpt-text">
+        <p>Laurasien war ein Planet mit zu vielen Menschen und keiner Hoffnung. Leku, einer dieser Menschen. Lebte in der Metropole Turicum — so gross und hässlich, dass sie im ganzen Universum bekannt war. Lärm, Rauch und verweste Menschen bestimmten das Bild.</p>
+        <p>In dieser Metropole gab es keine Zukunft, ausser man kommt auf ein Raumschiff. So bewunderte er die Schiffe, die andockten und abflogen. Spürte die Vibrationen der Triebwerke in seinem Inneren und roch die Luft.</p>
+        <p>Am Tag der Blauen Sonne traf er dann Marison und fragte:</p>
+        <blockquote class="dialogue">„Wohin geht deine Reise heute Marison und wann wirst du wieder zurück sein?"</blockquote>
+        <p>Marison wurde kurz still und sah sich um. Schlussendlich flüsterte er:</p>
+        <blockquote class="dialogue">„Flux 4"</blockquote>
+        <p>Leku wurde plötzlich still. Denn das System Flux 4 gab es seit 10 Jahren nicht mehr. Das Grosse Reich hatte vor 14 Jahren einen Krieg geführt in Flux 4 und seitdem werden alle Überlebenden dieses Systems gejagt und öffentlich hingerichtet.</p>
+        <p><em>Lekus Eltern starben vor zehn Jahren bei der Ausrottung. Er selbst überlebte nur, weil man ihn versklavte und nach Turicum brachte, um dort in den Stahlfabriken zu arbeiten.</em></p>
+      </div>
+      <div class="excerpt-more">Buch erscheint bald — drosenfeld.ch</div>
+    </div>
+  </div>
+</section>
+
+<div class="wrapper"><div class="chapter-divider"><div class="chapter-divider-inner">Kapitel IV — Kontakt</div></div></div>
+
+<section id="contact">
+  <div class="wrapper">
+    <div class="contact-seal">DR</div>
+    <div class="section-eyebrow">Lass uns reden</div>
+    <h2>Schreib mir</h2>
+    <p class="contact-sub">Für Projekte, Zusammenarbeit oder einfach einen Austausch.</p>
+    <div><a href="mailto:hallo@drosenfeld.ch" class="contact-email">hallo@drosenfeld.ch</a></div>
+    <div class="socials">
+      <a href="#" class="social-link">LinkedIn</a>
+      <a href="#" class="social-link">GitHub</a>
+      <a href="#" class="social-link">Instagram</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <span>© 2025 D. Rosenfeld</span>
+    <span>drosenfeld.ch</span>
+  </div>
+</footer>
+
+<script>
+  window.addEventListener('scroll', () => {
+    document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 40);
+  });
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+  document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+</script>
+</body>
+</html>
