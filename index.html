@@ -161,24 +161,24 @@
     .about-text p { color: var(--body); margin-bottom: 20px; font-size: 16px; line-height: 1.9; }
     .about-text p em { color: var(--warm); }
 
-    .logbook {
+    . {
       border: 1px solid var(--border); padding: 28px;
       background: var(--aged); position: relative;
     }
-    .logbook::before {
-      content: 'EINTRAG'; position: absolute; top: -1px; left: 20px;
+    .::before {
+      content: 'Über mich'; position: absolute; top: -1px; left: 20px;
       background: var(--aged); padding: 0 8px;
       font-family: 'Courier Prime', monospace; font-size: 9px;
       letter-spacing: 0.2em; color: var(--rust); transform: translateY(-50%);
     }
-    .logbook-line {
+    .-line {
       display: flex; justify-content: space-between; align-items: baseline;
       padding: 10px 0; border-bottom: 1px solid var(--border);
       font-family: 'Courier Prime', monospace; font-size: 12px;
     }
-    .logbook-line:last-child { border-bottom: none; }
-    .logbook-key { color: var(--muted); letter-spacing: 0.1em; }
-    .logbook-val { color: var(--heading); }
+    .-line:last-child { border-bottom: none; }
+    .-key { color: var(--muted); letter-spacing: 0.1em; }
+    .-val { color: var(--heading); }
 
     /* PROJECTS */
     .project-list { display: flex; flex-direction: column; gap: 2px; }
@@ -331,13 +331,13 @@
         <p>Was mich antreibt ist die Überzeugung, dass <em>jede Geschichte es wert ist, erzählt zu werden</em> — auch die unbequemen, die rohen, die noch unfertigen.</p>
         <p>Wenn ich nicht schreibe oder an Projekten arbeite, beobachte ich die Welt und sammle Fragmente, die sich irgendwann zu etwas Grösserem zusammenfügen.</p>
       </div>
-      <div class="logbook">
-        <div class="logbook-line"><span class="logbook-key">Name</span><span class="logbook-val">David Rosenfeld</span></div>
-        <div class="logbook-line"><span class="logbook-key">Planet</span><span class="logbook-val">Schweiz 🇨🇭</span></div>
-        <div class="logbook-line"><span class="logbook-key">Status</span><span class="logbook-val">Beschäftigt</span></div>
-        <div class="logbook-line"><span class="logbook-key">Sport</span><span class="logbook-val">Eishockey spielen und Golfen</span></div>
-        <div class="logbook-line"><span class="logbook-key">Hobbys</span><span class="logbook-val">Schreiben, lesen, Kochen, Strategie Spiele spielen und vieles mehr</span></div>
-        <div class="logbook-line"><span class="logbook-key">Werk</span><span class="logbook-val">The Stars</span></div>
+      <div class="">
+        <div class="-line"><span class="-key">Name</span><span class="-val">David Rosenfeld</span></div>
+        <div class="-line"><span class="-key">Planet</span><span class="-val">Schweiz</span></div>
+        <div class="-line"><span class="-key">Status</span><span class="-val">Beschäftigt</span></div>
+        <div class="-line"><span class="-key">Sport</span><span class="-val">Eishockey und Golf</span></div>
+        <div class="-line"><span class="-key">Hobbys</span><span class="-val">Schreiben, Kochen, Strategie Spiele spielen und vieles mehr</span></div>
+        <div class="-line"><span class="-key">Werk</span><span class="-val">The Stars</span></div>
       </div>
     </div>
   </div>
