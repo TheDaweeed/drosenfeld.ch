@@ -12,11 +12,12 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>David Rosenfeld</title>
+  <meta name="description" content="David Rosenfeld — Autor von The Stars, Eishockey Trainer, Schweiz">
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=IM+Fell+English:ital@0;1&family=Courier+Prime:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-
+ 
     :root {
       --ink:       #0e0c09;
       --paper:     #12100d;
@@ -32,9 +33,9 @@
       --ember:     #c4622a;
       --gold:      #c9a84c;
     }
-
+ 
     html { scroll-behavior: smooth; }
-
+ 
     body {
       background: var(--ink);
       color: var(--body);
@@ -43,7 +44,7 @@
       line-height: 1.8;
       overflow-x: hidden;
     }
-
+ 
     body::before {
       content: '';
       position: fixed; inset: 0; z-index: 0;
@@ -52,19 +53,19 @@
       mix-blend-mode: overlay;
       opacity: 0.8;
     }
-
+ 
     body::after {
       content: '';
       position: fixed; inset: 0; z-index: 0;
       pointer-events: none;
       background: radial-gradient(ellipse at center, transparent 50%, rgba(0,0,0,0.7) 100%);
     }
-
+ 
     .wrapper {
       position: relative; z-index: 1;
       max-width: 860px; margin: 0 auto; padding: 0 40px;
     }
-
+ 
     /* NAV */
     nav {
       position: fixed; top: 0; left: 0; right: 0; z-index: 100;
@@ -90,7 +91,7 @@
       color: var(--muted); text-decoration: none; transition: color .25s;
     }
     .nav-links a:hover { color: var(--gold); }
-
+ 
     /* HERO */
     #hero {
       min-height: 100vh; display: flex; flex-direction: column;
@@ -103,14 +104,14 @@
       display: flex; align-items: center; gap: 16px;
     }
     .chapter-mark::before, .chapter-mark::after { content: '—'; color: var(--rust); }
-
+ 
     h1 {
       font-family: 'Playfair Display', serif; font-size: clamp(56px, 9vw, 120px);
       font-weight: 700; line-height: 0.9; letter-spacing: -2px;
       color: var(--cream); margin-bottom: 12px;
     }
     h1 em { font-style: italic; color: var(--gold); display: block; }
-
+ 
     .hero-rule {
       width: 100%; height: 1px;
       background: linear-gradient(90deg, var(--ember), var(--border), transparent);
@@ -136,7 +137,7 @@
       color: rgba(201,168,76,0.03); top: 50%; right: -20px;
       transform: translateY(-50%); pointer-events: none; user-select: none; z-index: 0;
     }
-
+ 
     /* DIVIDER */
     .chapter-divider { text-align: center; padding: 60px 0; position: relative; }
     .chapter-divider::before {
@@ -150,7 +151,7 @@
       letter-spacing: 0.3em; text-transform: uppercase; color: var(--rust);
     }
     .chapter-divider-inner::before, .chapter-divider-inner::after { content: '✦'; color: var(--rust); font-size: 8px; }
-
+ 
     /* SECTIONS */
     section { padding: 80px 0; }
     .section-eyebrow {
@@ -163,31 +164,31 @@
       font-weight: 700; font-style: italic; color: var(--heading);
       letter-spacing: -0.5px; line-height: 1.1; margin-bottom: 32px;
     }
-
+ 
     /* ABOUT */
     .about-body { display: grid; grid-template-columns: 3fr 2fr; gap: 64px; align-items: start; }
     .about-text p { color: var(--body); margin-bottom: 20px; font-size: 16px; line-height: 1.9; }
     .about-text p em { color: var(--warm); }
-
-    . {
+ 
+    .logbook {
       border: 1px solid var(--border); padding: 28px;
       background: var(--aged); position: relative;
     }
-    .::before {
-      content: 'Eintrag'; position: absolute; top: -1px; left: 20px;
+    .logbook::before {
+      content: 'EINTRAG'; position: absolute; top: -1px; left: 20px;
       background: var(--aged); padding: 0 8px;
       font-family: 'Courier Prime', monospace; font-size: 9px;
       letter-spacing: 0.2em; color: var(--rust); transform: translateY(-50%);
     }
-    .-line {
+    .logbook-line {
       display: flex; justify-content: space-between; align-items: baseline;
       padding: 10px 0; border-bottom: 1px solid var(--border);
       font-family: 'Courier Prime', monospace; font-size: 12px;
     }
-    .-line:last-child { border-bottom: none; }
-    .-key { color: var(--muted); letter-spacing: 0.1em; }
-    .-val { color: var(--heading); }
-
+    .logbook-line:last-child { border-bottom: none; }
+    .logbook-key { color: var(--muted); letter-spacing: 0.1em; }
+    .logbook-val { color: var(--heading); }
+ 
     /* PROJECTS */
     .project-list { display: flex; flex-direction: column; gap: 2px; }
     .project-item {
@@ -213,7 +214,7 @@
       border-style: dashed; background: transparent; text-align: center; padding: 40px;
       color: var(--muted); font-family: 'Courier Prime', monospace; font-size: 12px; letter-spacing: 0.15em;
     }
-
+ 
     /* BOOK */
     .excerpt-frame {
       border: 1px solid var(--border); background: var(--aged);
@@ -246,7 +247,7 @@
       font-family: 'Courier Prime', monospace; font-size: 11px;
       letter-spacing: 0.15em; color: var(--muted); text-align: right;
     }
-
+ 
     /* CONTACT */
     #contact { padding: 80px 0 120px; text-align: center; }
     .contact-seal {
@@ -272,7 +273,7 @@
       color: var(--muted); text-decoration: none; transition: all .25s;
     }
     .social-link:hover { border-color: var(--ember); color: var(--ember); background: rgba(196,98,42,0.05); }
-
+ 
     /* FOOTER */
     footer { border-top: 1px solid var(--border); padding: 32px 0; }
     .footer-inner {
@@ -281,11 +282,11 @@
       font-family: 'Courier Prime', monospace; font-size: 10px;
       letter-spacing: 0.15em; color: var(--muted);
     }
-
+ 
     /* REVEAL */
     .reveal { opacity: 0; transform: translateY(24px); transition: opacity .8s ease, transform .8s ease; }
     .reveal.visible { opacity: 1; transform: none; }
-
+ 
     @media (max-width: 700px) {
       .about-body { grid-template-columns: 1fr; gap: 40px; }
       .nav-links { display: none; }
@@ -295,7 +296,7 @@
   </style>
 </head>
 <body>
-
+ 
 <nav id="nav">
   <div class="nav-inner">
     <a class="nav-logo" href="#">David Rosenfeld</a>
@@ -307,7 +308,7 @@
     </ul>
   </div>
 </nav>
-
+ 
 <section id="hero">
   <div class="wrapper">
     <div class="big-quote">"</div>
@@ -326,9 +327,9 @@
     </div>
   </div>
 </section>
-
+ 
 <div class="wrapper"><div class="chapter-divider"><div class="chapter-divider-inner">Kapitel I — Über mich</div></div></div>
-
+ 
 <section id="about">
   <div class="wrapper">
     <div class="section-eyebrow">Wer ich bin</div>
@@ -351,15 +352,14 @@
     </div>
   </div>
 </section>
-  
+ 
 <div class="wrapper"><div class="chapter-divider"><div class="chapter-divider-inner">Kapitel II — Projekte</div></div></div>
-
+ 
 <section id="projects">
   <div class="wrapper">
     <div class="section-eyebrow">Was ich geschaffen habe</div>
-    <h2>Projekte & Arbeiten</h2>
+    <h2>Projekte &amp; Arbeiten</h2>
     <div class="project-list">
-
       <div class="project-item reveal">
         <div class="project-header">
           <span class="project-num">001</span>
@@ -368,7 +368,6 @@
         <div class="project-title">The Stars</div>
         <p class="project-desc">Ein Science-Fiction-Roman. Eine Welt ohne Hoffnung, ein Sklave namens Leku, und ein Universum voller verborgener Wahrheiten.</p>
       </div>
-
       <div class="project-item reveal">
         <div class="project-header">
           <span class="project-num">002</span>
@@ -377,14 +376,13 @@
         <div class="project-title">Eishockey Trainer</div>
         <p class="project-desc">Als Trainer einer U16 Eishockey Mannschaft begleite ich junge Spieler auf ihrem Weg — taktisch, sportlich und menschlich. Eishockey ist mehr als ein Sport. Es ist Teamgeist, Disziplin und Leidenschaft auf dem Eis.</p>
       </div>
-
       <div class="project-item coming reveal">✦ &nbsp; Das nächste Projekt entsteht gerade &nbsp; ✦</div>
-
     </div>
   </div>
 </section>
+ 
 <div class="wrapper"><div class="chapter-divider"><div class="chapter-divider-inner">Kapitel III — The Stars</div></div></div>
-
+ 
 <section id="book">
   <div class="wrapper">
     <div class="section-eyebrow">Leseprobe</div>
@@ -406,9 +404,9 @@
     </div>
   </div>
 </section>
-
+ 
 <div class="wrapper"><div class="chapter-divider"><div class="chapter-divider-inner">Kapitel IV — Kontakt</div></div></div>
-
+ 
 <section id="contact">
   <div class="wrapper">
     <div class="contact-seal">DR</div>
@@ -423,14 +421,14 @@
     </div>
   </div>
 </section>
-
+ 
 <footer>
   <div class="footer-inner">
-    <span>© 2025 D. Rosenfeld</span>
+    <span>© 2025 David Rosenfeld</span>
     <span>drosenfeld.ch</span>
   </div>
 </footer>
-
+ 
 <script>
   window.addEventListener('scroll', () => {
     document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 40);
